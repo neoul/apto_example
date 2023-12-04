@@ -6,7 +6,7 @@
 # Usage: pkg-script start "node index.js"
 #
 function pkg-script () {
-  echo $(jq --arg key "${1}" --arg val "${2}" '.scripts[$key]=$val' package.json) | jq . | > package.json
+  echo $(jq --arg key "${1}" --arg val "${2}" '.scripts[$key]=$val' package.json) | jq . > _package.json && mv _package.json package.json
 }
 
 pkg-script build "tsc --build"
@@ -21,10 +21,11 @@ https://dev.to/theoparis/creating-a-typescript-project-47gl
 mkdir apto_example
 cd apto_example
 pnpm init
-pnpm i -D typescript @types/node prettier eslint eslint-config-prettier eslint-plugin-prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser
+pnpm i -D typescript @types/node
+jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json | jq "." > _package.json && mv _package.json package.json
 
 {
-  echo '{'
+  echo "{"
   echo '  "compilerOptions": {'
   echo '    "target": "ES2019",'
   echo '    "module": "CommonJS",'
@@ -40,8 +41,8 @@ pnpm i -D typescript @types/node prettier eslint eslint-config-prettier eslint-p
   echo '  },'
   echo '  "include": ["src"],'
   echo '  "exclude": ["node_modules", "**/*.spec.ts"]'
-  echo '}'
-} >> tsconfig.json
+  echo "}"
+} > tsconfig.json
 
 {
   echo 'dist'
@@ -51,4 +52,6 @@ pnpm i -D typescript @types/node prettier eslint eslint-config-prettier eslint-p
   echo '**/build'
 } >> .gitignore
 
+
+echo $(jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json) | jq . | > package.json
 ```
