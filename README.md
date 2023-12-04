@@ -21,8 +21,9 @@ https://dev.to/theoparis/creating-a-typescript-project-47gl
 mkdir apto_example
 cd apto_example
 pnpm init
-pnpm i -D typescript @types/node
+pnpm i -D typescript @types/node aptos apto_orm
 jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json | jq "." > _package.json && mv _package.json package.json
+jq --arg key "apto_orm" --arg val "apto_orm" '.scripts[$key]=$val' package.json | jq "." > _package.json && mv _package.json package.json
 
 {
   echo "{"
@@ -52,6 +53,6 @@ jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json 
   echo '**/build'
 } >> .gitignore
 
-
-echo $(jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json) | jq . | > package.json
+npx apto_orm init src/inventory
+pnpm build
 ```
