@@ -47,6 +47,7 @@ npx apto_orm generate src/apto_example
 npx apto_orm compile src/apto_example
 npx apto_orm create-account -k .key/apto_example --prepay_url http://localhost:5678
 npx apto_orm publish src/apto_example -k .key/apto_example --prepay_url http://localhost:5678
+npx apto_orm create src/apto_example -k .key/apto_example --prepay_url http://localhost:5678 -c BaseToken -d '{ "uri": "http://abc.com", "description": "ok", "id": 123, "name": "ABC" }'
 ```
 
 - Typescript project creation: [creating-a-typescript-project](https://dev.to/theoparis/creating-a-typescript-project-47gl)
