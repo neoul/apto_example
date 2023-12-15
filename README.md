@@ -1,34 +1,21 @@
 # AptoORM example
 
-```bash
-# Reusable bash function you can add to your ~/.zshrc or ~/.bashrc file
-#
-# Usage: pkg-script start "node index.js"
-#
-function pkg-script () {
-  echo $(jq --arg key "${1}" --arg val "${2}" '.scripts[$key]=$val' package.json) | jq . > _package.json && mv _package.json package.json
-}
+## How to use AptoORM?
 
-pkg-script build "tsc --build"
-
-```
 
 ```bash
-https://dev.to/theoparis/creating-a-typescript-project-47gl
-```
-
-```bash
+# Initialize AptoORM Typescript project
 mkdir apto_example
 cd apto_example
 pnpm init
-pnpm i -D typescript @types/node aptos apto_orm
+pnpm i -D typescript @types/node aptos apto_orm ts-node
 jq --arg key "build" --arg val "tsc --build" '.scripts[$key]=$val' package.json | jq "." > _package.json && mv _package.json package.json
 jq --arg key "apto_orm" --arg val "apto_orm" '.scripts[$key]=$val' package.json | jq "." > _package.json && mv _package.json package.json
 
 {
   echo "{"
   echo '  "compilerOptions": {'
-  echo '    "target": "ES2019",'
+  echo '    "target": "ES2020",'
   echo '    "module": "CommonJS",'
   echo '    "moduleResolution": "node",'
   echo '    "skipLibCheck": true,'
@@ -51,8 +38,14 @@ jq --arg key "apto_orm" --arg val "apto_orm" '.scripts[$key]=$val' package.json 
   echo 'build'
   echo 'node_modules'
   echo '**/build'
-} >> .gitignore
+} > .gitignore
 
-npx apto_orm init src/inventory
+# Create AptoORM class
+npx apto_orm init src/apto_example --token
+npx apto_orm compile src/apto_example
+
+
 pnpm build
 ```
+
+- Typescript project creation: [creating-a-typescript-project](https://dev.to/theoparis/creating-a-typescript-project-47gl)
