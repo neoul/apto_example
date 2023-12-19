@@ -42,7 +42,7 @@ jq --arg key "apto_orm" --arg val "apto_orm" '.scripts[$key]=$val' package.json 
 } > .gitignore
 
 # Create AptoORM class
-npx apto_orm init src/apto_example --token
+npx apto_orm init src/apto_example --token -c MyToken
 npx apto_orm generate src/apto_example
 npx apto_orm compile src/apto_example
 npx apto_orm create-account -k .key/apto_example --prepay_url http://localhost:5678
